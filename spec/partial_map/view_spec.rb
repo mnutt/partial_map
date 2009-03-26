@@ -1,18 +1,18 @@
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-RAILS_ROOT = File.expand_path(File.join(File.dirname(__FILE__), "rails_app"))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
+RAILS_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..', "rails_app"))
 
 require 'rubygems'
 require 'spec'
-require 'partial_map'
+require 'partial_map/view'
 
-describe 'View' do
+describe 'PartialMap::View' do
   it 'should have a default root directory that is the rails view dir' do
-    View::ROOT.should == File.expand_path(File.dirname(__FILE__) + "/rails_app/app/views")
+    PartialMap::View::ROOT.should == File.expand_path(File.dirname(__FILE__) + "/../rails_app/app/views")
   end
 
   describe 'with no partials' do
     before do
-      @view = View.new("users/new")
+      @view = PartialMap::View.new("users/new")
     end
 
     it 'should get the correct path of a view' do
@@ -26,14 +26,14 @@ describe 'View' do
 
   describe 'with a single partial' do
     it 'should have a single child' do
-      @view = View.new("users/index")
+      @view = PartialMap::View.new("users/index")
       @view.children.size.should == 1
     end
   end
 
   describe 'with a partial that has a different directory' do
     before do
-      @view = View.new("posts/post")
+      @view = PartialMap::View.new("posts/post")
       @partial = @view.children.first
     end
 
@@ -48,7 +48,7 @@ describe 'View' do
 
   describe 'a nonexistent view' do
     before do
-     @view = View.new("users/notfound")
+     @view = PartialMap::View.new("users/notfound")
     end
 
     it 'should be not_found' do
@@ -60,7 +60,7 @@ describe 'View' do
     end
 
     it 'should print a not found message' do
-      @view.to_yaml.should =~ /File not found/
+      @view.to_hash.should =~ /File not found/
     end
   end
 end
