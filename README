@@ -1,0 +1,17 @@
+PartialMap
+==========
+
+PartialMap is a small rake task that shows the heirarchy of your rails views and the partials they
+call.  It can also take an optional directory argument, which will scope the tree to that view
+directory.
+
+Example
+=======
+
+% rake partial_map
+...
+
+% rake partial_map app/views/users
+...
+
+Copyright (c) 2009 Michael Nutt <michael@nuttnet.net>, released under the MIT license
